@@ -1,0 +1,16 @@
+.sidenav {
+    background: rgb(196, 216, 228);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+}
+
+body{
+    background: #949dbe;
+    position: absolute;
+    left: 250px;
+}
