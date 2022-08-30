@@ -1,0 +1,6 @@
+django-haystack==3.2.1
+haystack==0.42
+Markdown==3.4.1
+django-taggit==3.0.0
+Django==4.1
+pysolr==3.9.0

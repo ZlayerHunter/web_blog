@@ -1,3 +1,4 @@
+from email import contentmanager
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -5,11 +6,12 @@ from django.views.generic import ListView
 from django.core.mail import send_mail
 from glava1.settings import EMAIL_HOST_USER
 from .models import Post, Comment
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 from taggit.models import Tag
 from django.db.models import Count
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from haystack.query import SearchQuerySet
 
 def post_list(request, tag_slug=None):
     object_list = Post.objects.filter(status='published')
@@ -98,3 +100,24 @@ def post_share(request, post_id):
 class PostAdd(CreateView):
     model = Post
     fields = ["title", "slug", "author", "body", "publish", "status", "tags"]
+    
+def post_search(request):
+    form = SearchForm()
+    if 'query' in request.GET:
+    #if request.GET['query']:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            cd = form.cleaned_data
+            results = SearchQuerySet().models(Post).filter(content=cd['query']).load_all()
+            #C:\Users\Slaye\AppData\Local\Programs\Python\Python310\Lib\site-packages\haystack\backends\solr_backend.py
+            # 541 app_label, model_name = raw_result[DJANGO_CT][0].split(".")
+            # 584 result = result_class(app_label, model_name, raw_result[DJANGO_ID][0], raw_result['score'], **additional_fields)
+            # count total results
+            total_results = results.count()
+        return render(request,
+                  'blog/post/search.html',
+                  {'form': form,
+                   'cd': cd,
+                   'results': results,
+                   'total_results': total_results})
+    return render(request, 'blog/post/search.html', {'form': form})

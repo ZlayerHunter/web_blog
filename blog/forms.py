@@ -17,3 +17,6 @@ class CommentForm(forms.ModelForm):
 #    class Meta:
 #        model = Post
 #        fields = ("title", "author", "body", "publish", "status", "tags")
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
