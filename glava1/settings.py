@@ -33,8 +33,7 @@ SITE_ID = 1
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
+INSTALLED_APPS = [ 
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'haystack',
     'accounts',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -134,8 +134,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL
 
 EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_HOST_USER = 'skrybykinnewrgun@mail.ru'
-EMAIL_HOST_PASSWORD = '8xEyaJVfcxn3gSFY8yd5'
+EMAIL_HOST_USER = 'vasha_pochta@mail.ru'
+EMAIL_HOST_PASSWORD = 'vash_token'
 EMAIL_PORT = 2525
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
@@ -164,3 +164,7 @@ HAYSTACK_CONNECTIONS = {
 LOGIN_REDIRECT_URL = reverse_lazy('accounts:dashboard')
 LOGIN_URL = reverse_lazy('accounts:login')
 LOGOUT_URL = reverse_lazy('accounts:logout')
+
+# EMAIL BACKEND
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
